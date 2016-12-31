@@ -89,13 +89,13 @@ int main()
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
         mergeSortedParts(array, myEndPosition + 1);
-        for(i = 0; i <= PROBLEM_SIZE; i++)
+    }
+            for(i = 0; i <= PROBLEM_SIZE; i++)
         {
             printf("%d\n", array[i]);
             if(i%10 == 0)
                 getchar();
         }
-    }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
@@ -118,7 +118,7 @@ void mergeSortedParts(int array[], int gap)
             for(k = i * gap; k<=  2 * i * gap - 1; k++)
             {
             if(array[j] > array[k])
-            {printf("QWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+            {
                 // swapping values (note: no temp variable used)
                 array[j] = array[j] + array[k];
                 array[k] = array[j] - array[k];
