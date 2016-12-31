@@ -112,10 +112,11 @@ int main()
 void mergeSortedParts(int array[], int myEndPosition)
 {
     int i, j;
-    for(i = 0; i <= myEndPosition; i++)
+
+    for(i = 0; i <= PROBLEM_SIZE - 1; i++)
     {
-    for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
-    {
+        for(j = i + myEndPosition; j <= i + 2 * myEndPosition; j+=myEndPosition)
+        {
             if(array[i] > array[j])
             {
                 // swapping values (note: no temp variable used)
@@ -123,7 +124,7 @@ void mergeSortedParts(int array[], int myEndPosition)
                 array[j] = array[i] - array[j];
                 array[i] = array[i] - array[j];
             }
-    }
+        }
     }
 }
 
