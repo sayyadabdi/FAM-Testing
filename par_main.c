@@ -77,7 +77,7 @@ int main()
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                *(a + i) = *(a + i) + sqrt(*(a + i)) + sqrt(j * k);
+                *(a + i) = 5;
             }
         }
     }
