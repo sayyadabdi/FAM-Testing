@@ -94,7 +94,7 @@ int main()
                 for(i = 65500; i <= PROBLEM_SIZE; i++)
                 {
             printf("%d\n", array[i]);
-            if(i%1000 == 0)
+            if(i%5 == 0)
             getchar();
             }
             }
@@ -115,7 +115,7 @@ void mergeSortedParts(int array[], int myEndPosition)
 
     for(i = 0; i <= myEndPosition; i++)
     {
-        for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE; j+=myEndPosition + 1)
+        for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
         {
             if(array[i] > array[j])
             {
