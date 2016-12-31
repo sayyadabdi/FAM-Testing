@@ -35,10 +35,7 @@ int main()
     doSort(array, len);
     stop_timer();
     print_timer();*/
-    char a[1024];
-    a[1023] = '\0';
-    gethostname(a, 1024);
-    printf("%s\n", a);
+    printf("%d\n", getID());
     return 0;
 }
 
@@ -46,7 +43,7 @@ int getID()
 {
     char a[8];
     char ids[3];
-    strcpy(a, getlogin());
+    gethostname(a, 8);
     strcat(a, "$");
     ids[0] = a[6];
     if(a[7] != '$')
