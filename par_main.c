@@ -111,7 +111,8 @@ int main()
 
 void mergeSortedParts(int array[], int gap)
 {
-    int i, j, k;
+    int i, j;
+    printf("%d\n",gap);
     for(i = 0; i <= gap - 1; i++)
     {
     for(j = i + gap; j <= i +  2 * gap - 1; j++)
