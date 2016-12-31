@@ -59,6 +59,9 @@ int main()
         exit(1);
     }
 
+    // Remember: this memory is persistent! So always clear this flag...
+    a[N + 1] = 0;
+
     if(myID == MASTER)
     {
         // It is used to determine others working status
@@ -105,8 +108,6 @@ int main()
     munmap(a, (N + 2) * 4);
     if(myID == MASTER)
     {
-        // Remember: this memory is persistent! So always clear this flag...
-        a[N + 1] = 0;
         stop_timer();
         print_timer();
     }
