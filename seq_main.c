@@ -13,7 +13,7 @@ void doSort(int[], int);
 int getID();
 
 int main()
-{/*
+{
     int array[65536];
     int i, len;
     char input;
@@ -32,12 +32,9 @@ int main()
         // storing the array in desc order: this is worst case scenario for sorting
         array[i] = len - 1 - i;
     }
-
     doSort(array, len);
     stop_timer();
-    print_timer();*/
-    char* a = getlogin();
-    printf("%s", a);
+    print_timer();
     return 0;
 }
 
