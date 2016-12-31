@@ -12,7 +12,7 @@
 
 #define MASTER 1
 
-#defint EVERYBODY_GO -7
+#define EVERYBODY_GO -7
 
 #define WORLD_SIZE 2
 
