@@ -71,8 +71,8 @@ int main()
         printf("Got the signal, pleas wait...\n");
     }
 
-    myStartingPosition = (myID - 1) * ((PROBLEM_SIZE - 1) / WORLD_SIZE);
-    myEndPosition = myStartingPosition + ((PROBLEM_SIZE - 1) / WORLD_SIZE) - 1;
+    myStartingPosition = (myID - 1) * ((PROBLEM_SIZE) / WORLD_SIZE);
+    myEndPosition = myStartingPosition + ((PROBLEM_SIZE) / WORLD_SIZE) - 1;
 
     for(i = myStartingPosition; i <= myEndPosition; i++)
     {
@@ -115,7 +115,7 @@ void mergeSortedParts(int array[], int myEndPosition)
 
     for(i = 0; i <= myEndPosition + 1; i++)
     {
-        for(j = i + myEndPosition; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
+        for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
         {
             if(array[i] > array[j])
             {
