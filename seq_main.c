@@ -3,25 +3,22 @@
 #include <sys/time.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 
-#define PROBLEM_SIZE 65536
-
+#define N 32
 
 struct timeval t1, t2;
 
 void start_timer();
 void stop_timer();
 void print_timer();
-void doSort(int[], int);
-int getID();
 
 int main()
 {
-    int array[PROBLEM_SIZE];
-    int i, len;
+    double* a;
+    int i, j, k;
     char input;
-
-    printf("Press Y to start...\n");
+    printf("\nPress Y to start...\n");
     do
     {
         scanf("%c", &input);
@@ -29,35 +26,29 @@ int main()
     while(input != 'Y' && input != 'y');
     start_timer();
     printf("Please wait...\n");
-    len = PROBLEM_SIZE;
-    for(i = 0; i <= len - 1; i++)
+
+    a = malloc(N * sizeof(double));
+
+    // This is very expensive (not that expensive though...)
+    for(i = 0; i <= N - 1; i++)
     {
-        // storing the array in desc order: this is worst case scenario for sorting
-        array[i] = len - 1 - i;
+        a[i] = 0.0f;
+        for(j = 0; j <= N - 1; j++)
+        {
+            for(k = 0; k <= N - 1; k++)
+            {
+                // Do something
+                a[i] += sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(a[i]) + sqrt(j * k))))))))));
+            }
+        }
     }
-    doSort(array, len);
     stop_timer();
     print_timer();
+    for(i = 0; i <= N - 1; i++)
+    {
+    printf("a[%d] = %f\n", i, a[i]);
+    }
     return 0;
-}
-
-int getID()
-{
-    char a[8];
-    char ids[3];
-    gethostname(a, 8);
-    strcat(a, "$");
-    ids[0] = a[6];
-    if(a[7] != '$')
-    {
-        ids[1] = a[7];
-        ids[2] = '\0';
-    }
-    else
-    {
-        ids[1] = '\0';
-    }
-    return atoi(ids);
 }
 
 void start_timer()
@@ -75,24 +66,4 @@ void print_timer()
     int elapsedTime;
     elapsedTime = (t2.tv_sec - t1.tv_sec);
     printf("Elapsed time: %d seconds.\n", elapsedTime);
-}
-
-// This is the expensive function
-void doSort(int array[], int len)
-{
-    int i, j;
-
-    for(i = 0; i <= len - 1; i++)
-    {
-        for(j = i + 1; j <= len - 1; j++)
-        {
-            if(array[i] > array[j])
-            {
-                // swapping values (note: no temp variable used)
-                array[i] = array[i] + array[j];
-                array[j] = array[i] - array[j];
-                array[i] = array[i] - array[j];
-            }
-        }
-    }
 }

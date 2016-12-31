@@ -6,10 +6,9 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <math.h>
 
-#define N 128
-
-#define LEN N * N
+#define N 32
 
 #define MASTER 1
 
@@ -21,15 +20,13 @@ struct timeval t1, t2;
 void start_timer();
 void stop_timer();
 void print_timer();
-void doSort(int[], int, int);
 int getID();
-void mergeSortedParts(int[], int);
 
 int main()
 {
     // File descriptor
     int fd;
-    int* array;
+    int* a;
     int myID, i, j, k;
     char input;
     myID = getID();
@@ -54,7 +51,7 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for end_job_flag. Integers reserve 4 bytes.
-    if ((array = mmap(NULL, (LEN + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((a = mmap(NULL, (N + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -63,76 +60,52 @@ int main()
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        array[LEN] = -1 * WORLD_SIZE;
+        a[N] = -1 * WORLD_SIZE;
     }
     else
     {
-        while(array[LEN] != -1 * WORLD_SIZE); // Wait for master's signal.
+        while(a[N] != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
 
-    j = 0, k = 0;
-    for(i = 0; i <= LEN - 1; i++)
+    // This is very expensive (not that expensive though...)
+    for(i = 0; i <= N - 1; i += WORLD_SIZE)
     {
-        if(i!= 0 && i % N == 0)
+        a[i + myID - 1] = 0.0f;
+        for(j = 0; j <= N - 1; j++)
         {
-            j++;
-            k = 0;
+            for(k = 0; k <= N - 1; k++)
+            {
+                // Do something
+                a[i + myID - 1] += sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(a[i]) + sqrt(j * k))))))))));
+            }
         }
-        array[i] = j * k;
-        k++;
     }
 
-    //doSort(array, myStartingPosition, myEndPosition);
-
     // It says: My job is finished!
-    array[LEN]++;
+    a[N]++;
 
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(array[LEN] != 0); // wait for others
-        // Array is partialy sorted, so we have to merge them.
-        //mergeSortedParts(array, myEndPosition + 1);
-        for(i = 0; i <= LEN; i++)
+        while(a[N] != 0); // wait for others
+
+        for(i = 0; i <= N; i++)
         {
-            printf("%d\n", array[i]);
+            printf("%f\n", a[i]);
             if(i%10 == 0)
                 getchar();
         }
     }
 
     // Unmapping memory
-    munmap(array, (LEN + 1) * 4);
+    munmap(a, (N + 1) * 4);
     if(myID == MASTER)
     {
         stop_timer();
         print_timer();
     }
     return 0;
-}
-
-void mergeSortedParts(int array[], int gap)
-{
-    int i, j, k;
-    i = 1;
-    while(i <= WORLD_SIZE - 1)
-    {
-        for(j = 0; j<= i * gap - 1; j++)
-        {
-            for(k = i * gap; k<=  2 * i * gap - 1; k++)
-            {
-            if(array[j] > array[k])
-            {
-                // swapping values (note: no temp variable used)
-                array[j] = array[j] + array[k];
-                array[k] = array[j] - array[k];
-                array[j] = array[j] - array[k];
-            }
-            }
-        }
-        i++;
-    }
 }
 
 int getID()
@@ -169,24 +142,4 @@ void print_timer()
     int elapsedTime;
     elapsedTime = (t2.tv_sec - t1.tv_sec);
     printf("Elapsed time: %d seconds.\n", elapsedTime);
-}
-
-// This is the expensive function
-void doSort(int array[], int myStartingPosition, int myEndPosition)
-{
-    int i, j;
-
-    for(i = myStartingPosition; i <= myEndPosition; i++)
-    {
-        for(j = i + 1; j <= myEndPosition; j++)
-        {
-            if(array[i] > array[j])
-            {
-                // swapping values (note: no temp variable used)
-                array[i] = array[i] + array[j];
-                array[j] = array[i] - array[j];
-                array[i] = array[i] - array[j];
-            }
-        }
-    }
 }
