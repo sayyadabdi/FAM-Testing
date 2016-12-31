@@ -3,6 +3,9 @@
 #include <sys/time.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 
 #define PROBLEM_SIZE 65536
 
