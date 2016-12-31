@@ -58,7 +58,7 @@ int main()
     for(i = myStartingPosition; i <= myEndPosition; i++)
     {
         // storing the array in desc order: this is worst case scenario for sorting
-        array[i] = len - 1 - i;
+        array[i] = (PROBLEM_SIZE - 1) - 1 - i;
     }
 
     doSort(array, myStartingPosition, myEndPosition);
