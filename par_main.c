@@ -67,6 +67,7 @@ int main()
     else
     {
         while(array[PROBLEM_SIZE] != -1 * WORLD_SIZE); // Wait for master's signal.
+        printf("Got the signal, pleas wait...\n");
     }
 
     myStartingPosition = (myID - 1) * ((PROBLEM_SIZE - 1) / WORLD_SIZE);
