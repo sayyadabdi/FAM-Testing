@@ -4,6 +4,9 @@
 #include <string.h>
 #include <unistd.h>
 
+#define PROBLEM_SIZE 65536
+
+
 struct timeval t1, t2;
 
 void start_timer();
@@ -13,7 +16,7 @@ void doSort(int[], int);
 int getID();
 
 int main()
-{/*
+{
     int array[65536];
     int i, len;
     char input;
@@ -34,8 +37,7 @@ int main()
     }
     doSort(array, len);
     stop_timer();
-    print_timer();*/
-    printf("%d\n", getID());
+    print_timer();
     return 0;
 }
 
