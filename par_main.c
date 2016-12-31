@@ -50,8 +50,8 @@ int main()
         perror("open failed");
         exit(1);
     }
-    // PROBLEM_SIZE + 1: One for end_job_flag. Integers reserve 4 bytes.
-    if ((a = mmap(NULL, (N + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    // PROBLEM_SIZE + 1: One for end_job_flag. Doubles reserve 8 bytes.
+    if ((a = mmap(NULL, (N + 1) * 8, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -99,7 +99,7 @@ int main()
     }
 
     // Unmapping memory
-    munmap(a, (N + 1) * 4);
+    munmap(a, (N + 1) * 8);
     if(myID == MASTER)
     {
         stop_timer();
