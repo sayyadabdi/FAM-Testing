@@ -13,7 +13,7 @@ void doSort(int[], int);
 int getID();
 
 int main()
-{
+{/*
     int array[65536];
     int i, len;
     char input;
@@ -34,7 +34,8 @@ int main()
     }
     doSort(array, len);
     stop_timer();
-    print_timer();
+    print_timer();*/
+    printf(getlogin());
     return 0;
 }
 
