@@ -52,8 +52,16 @@ int main()
         exit(1);
     }
 
-    // It is used to determine others working status
-    array[PROBLEM_SIZE] = 0;
+    if(myID == MASTER)
+    {
+        // It is used to determine others working status
+        array[PROBLEM_SIZE] = -1 * WORLD_SIZE;
+    }
+    else
+    {
+        printf("Waiting for boss' permission!\n");
+        while(array[PROBLEM_SIZE] != -1 * WORLD_SIZE); // Wait for master's signal.
+    }
 
     myStartingPosition = (myID - 1) * ((PROBLEM_SIZE - 1) / WORLD_SIZE);
     myEndPosition = myStartingPosition + ((PROBLEM_SIZE - 1) / WORLD_SIZE) - 1;
@@ -73,8 +81,8 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != WORLD_SIZE); // wait for others
-            for(i=0;i<=PROBLEM_SIZE;i++)
-    printf("%d\n", array[i]);
+        for(i=0; i<=PROBLEM_SIZE; i++)
+            printf("%d\n", array[i]);
     }
 
     // Unmapping memory
