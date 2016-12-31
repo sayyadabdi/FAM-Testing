@@ -72,15 +72,15 @@ int main()
     }
 
     // This is very expensive (not that expensive though...)
-    for(i = 0; i <= N - 1; i ++)
+    for(i = 0; i <= N - 1; i += WORLD_SIZE)
     {
-        a[i] = 0.0f;
+        a[i + myID - 1] = 0;
         for(j = 0; j <= N - 1; j++)
         {
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i] = 5;
+                a[i + myID - 1] = j * k;
             }
         }
     }

@@ -15,7 +15,7 @@ void print_timer();
 
 int main()
 {
-    double* a;
+    int* a;
     int i, j, k;
     char input;
     printf("\nPress Y to start...\n");
@@ -27,18 +27,18 @@ int main()
     start_timer();
     printf("Please wait...\n");
 
-    a = malloc(N * sizeof(double));
+    a = malloc(N * sizeof(int));
 
     // This is very expensive (not that expensive though...)
     for(i = 0; i <= N - 1; i++)
     {
-        a[i] = 0.0f;
+        a[i] = 0;
         for(j = 0; j <= N - 1; j++)
         {
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i] = a[i] + sqrt(a[i]) + sqrt(j * k);
+                a[i] = j * k;
             }
         }
     }
@@ -46,7 +46,7 @@ int main()
     print_timer();
     for(i = 0; i <= N - 1; i++)
     {
-    printf("a[%d] = %f\n", i, a[i]);
+    printf("a[%d] = %d\n", i, a[i]);
     }
     return 0;
 }
