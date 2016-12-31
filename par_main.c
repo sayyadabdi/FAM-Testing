@@ -67,7 +67,8 @@ int main()
         while(*(a + N) != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
-
+    a[0] = 5.0f;
+/*
     // This is very expensive (not that expensive though...)
     for(i = 0; i <= N - 1; i ++)
     {
@@ -81,7 +82,7 @@ int main()
             }
         }
     }
-
+*/
     // It says: My job is finished!
     *(a + N) = *(a + N) + 1;
 
