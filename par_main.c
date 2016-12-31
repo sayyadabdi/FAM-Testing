@@ -87,6 +87,7 @@ int main()
 
     if(myID == MASTER)
     {
+        printf("\n%d\n", myID);
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
