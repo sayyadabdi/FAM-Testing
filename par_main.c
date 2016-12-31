@@ -77,7 +77,7 @@ int main()
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i + myID - 1] += sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(a[i + myID - 1]) + sqrt(j * k))))))))));
+                a[i + myID - 1] += sqrt(sqrt(a[i + myID - 1]) + sqrt(j * k));
             }
         }
     }

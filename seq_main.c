@@ -38,7 +38,7 @@ int main()
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i] += sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(sqrt(a[i]) + sqrt(j * k))))))))));
+                a[i] += sqrt(sqrt(a[i]) + sqrt(j * k));
             }
         }
     }
@@ -46,7 +46,7 @@ int main()
     print_timer();
     for(i = 0; i <= N - 1; i++)
     {
-    printf("a[%d] = %f\n", i, a[i]);
+    printf("a[%f] = %f\n", i, a[i]);
     }
     return 0;
 }
