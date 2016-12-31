@@ -115,7 +115,7 @@ void mergeSortedParts(int array[], int myEndPosition)
 
     for(i = 0; i <= myEndPosition + 1; i++)
     {
-        for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
+        for(j = i + myEndPosition; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
         {
             if(array[i] > array[j])
             {
