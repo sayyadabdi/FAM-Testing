@@ -6,6 +6,8 @@
 
 #define PROBLEM_SIZE 65536
 
+#define MASTER 1
+
 
 struct timeval t1, t2;
 
@@ -17,10 +19,9 @@ int getID();
 
 int main()
 {
-    int array[PROBLEM_SIZE];
-    int i, len;
+    int* array;
+    int myID, i, len;
     char input;
-
     printf("Press Y to start...\n");
     do
     {
@@ -28,8 +29,14 @@ int main()
     }
     while(input != 'Y' && input != 'y');
     start_timer();
+    myID = getID();
+
+    if(myID == MASTER)
+    {
+
+    }
     printf("Please wait...\n");
-    len = PROBLEM_SIZE;
+    len = 65536;
     for(i = 0; i <= len - 1; i++)
     {
         // storing the array in desc order: this is worst case scenario for sorting
