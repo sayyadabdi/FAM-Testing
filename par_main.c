@@ -76,7 +76,7 @@ int main()
     for(i = myStartingPosition; i <= myEndPosition; i++)
     {
         // storing the array in desc order: this is worst case scenario for sorting
-        array[i] = (PROBLEM_SIZE - 1) - 1 - i;
+        array[i] = PROBLEM_SIZE - 1 - i;
     }
 
     doSort(array, myStartingPosition, myEndPosition);
@@ -89,7 +89,11 @@ int main()
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
                 for(i = 0; i <= PROBLEM_SIZE; i++)
+                {
             printf("%d\n", array[i]);
+            if(i%5 == 0)
+                getchar();
+            }
     }
 
     // Unmapping memory
