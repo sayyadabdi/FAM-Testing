@@ -116,6 +116,8 @@ void mergeSortedParts(int array[], int myEndPosition)
     {
     for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition + 1)
     {
+        printf("array[0] = %d , array[j] = %d", array[i],array[j]);
+        getchar();
             if(array[i] > array[j])
             {
                 // swapping values (note: no temp variable used)
