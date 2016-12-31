@@ -23,6 +23,7 @@ void stop_timer();
 void print_timer();
 void doSort(int[], int, int);
 int getID();
+void mergeSortedParts(int[], int);
 
 int main()
 {
@@ -88,6 +89,8 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
+        // Array is partialy sorted, so we have to merge them.
+        mergeSortedParts(array, myEndPosition - myStartingPosition + 1);
                 for(i = 0; i <= PROBLEM_SIZE; i++)
                 {
             printf("%d\n", array[i]);
@@ -104,6 +107,24 @@ int main()
         print_timer();
     }
     return 0;
+}
+
+void mergeSortedParts(int array[], int gap)
+{
+    int i, j;
+    for(i = 0; i <= gap - 1; i++)
+    {
+    for(j = i + gap; j <= j + gap - 1; j++)
+    {
+            if(array[i] > array[j])
+            {
+                // swapping values (note: no temp variable used)
+                array[i] = array[i] + array[j];
+                array[j] = array[i] - array[j];
+                array[i] = array[i] - array[j];
+            }
+    }
+    }
 }
 
 int getID()
@@ -149,7 +170,7 @@ void doSort(int array[], int myStartingPosition, int myEndPosition)
 
     for(i = myStartingPosition; i <= myEndPosition; i++)
     {
-        for(j = i + 1; j <= PROBLEM_SIZE - 1; j++)
+        for(j = i + 1; j <= myEndPosition; j++)
         {
             if(array[i] > array[j])
             {
