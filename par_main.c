@@ -89,15 +89,15 @@ int main()
     //doSort(array, myStartingPosition, myEndPosition);
 
     // It says: My job is finished!
-    array[PROBLEM_SIZE]++;
+    array[LEN]++;
 
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(array[PROBLEM_SIZE] != 0); // wait for others
+        while(array[LEN] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
         //mergeSortedParts(array, myEndPosition + 1);
-        for(i = 0; i <= PROBLEM_SIZE; i++)
+        for(i = 0; i <= LEN; i++)
         {
             printf("%d\n", array[i]);
             if(i%10 == 0)
@@ -106,7 +106,7 @@ int main()
     }
 
     // Unmapping memory
-    munmap(array, (PROBLEM_SIZE + 1) * 4);
+    munmap(array, (LEN + 1) * 4);
     if(myID == MASTER)
     {
         stop_timer();
