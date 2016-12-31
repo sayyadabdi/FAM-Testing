@@ -69,9 +69,9 @@ int main()
     }
 
     // This is very expensive (not that expensive though...)
-    for(i = 0; i <= N - 1; i += WORLD_SIZE)
+    for(i = 0; i <= N - 1; i ++)
     {
-        a[i + myID - 1] = 0.0f;
+        a[i] = 0.0f;
         for(j = 0; j <= N - 1; j++)
         {
             for(k = 0; k <= N - 1; k++)
