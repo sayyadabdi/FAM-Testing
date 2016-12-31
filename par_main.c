@@ -60,39 +60,39 @@ int main()
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        a[N] = -1 * WORLD_SIZE;
+        *(a + N) = -1 * WORLD_SIZE;
     }
     else
     {
-        while(a[N] != -1 * WORLD_SIZE); // Wait for master's signal.
+        while(*(a + N) != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
 
     // This is very expensive (not that expensive though...)
     for(i = 0; i <= N - 1; i ++)
     {
-        a[i] = 0.0f;
+        *(a + i) = 0.0f;
         for(j = 0; j <= N - 1; j++)
         {
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i] = a[i] + sqrt(a[i]) + sqrt(j * k);
+                *(a + i) = *(a + i) + sqrt(*(a + i)) + sqrt(j * k);
             }
         }
     }
 
     // It says: My job is finished!
-    a[N]++;
+    *(a + N) = *(a + N) + 1;
 
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(a[N] != 0); // wait for others
+        while(*(a + N) != 0); // wait for others
 
         for(i = 0; i <= N; i++)
         {
-            printf("a[%d] = %f\n", i, a[i]);
+            printf("a[%d] = %f\n", i, *(a + i));
             if(i%10 == 0)
                 getchar();
         }
