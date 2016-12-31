@@ -90,14 +90,14 @@ int main()
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
-        mergeSortedParts(array, myEndPosition);
-                for(i = 0; i <= PROBLEM_SIZE; i++)
-                {
+        mergeSortedParts(array, myEndPosition + 1);
+        for(i = 0; i <= PROBLEM_SIZE; i++)
+        {
             printf("%d\n", array[i]);
             if(i%5 == 0)
-            getchar();
-            }
-            }
+                getchar();
+        }
+    }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
@@ -109,22 +109,26 @@ int main()
     return 0;
 }
 
-void mergeSortedParts(int array[], int myEndPosition)
+void mergeSortedParts(int array[], int gap)
 {
-    int i, j;
-
-    for(i = 0; i <= myEndPosition + 1; i++)
+    int i, j, k;
+    i = 1;
+    while(i <= WORLD_SIZE - 1)
     {
-        for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
+        for(j = 0; j<= i * gap - 1; j++)
         {
-            if(array[i] > array[j])
+            for(k = i * gap; k<=  2 * i * gap - 1; k++)
+            {
+            if(array[j] > array[k])
             {
                 // swapping values (note: no temp variable used)
-                array[i] = array[i] + array[j];
-                array[j] = array[i] - array[j];
-                array[i] = array[i] - array[j];
+                array[j] = array[j] + array[k];
+                array[k] = array[j] - array[k];
+                array[j] = array[j] - array[k];
+            }
             }
         }
+        i++;
     }
 }
 
