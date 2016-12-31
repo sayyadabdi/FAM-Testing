@@ -92,7 +92,7 @@ int main()
 
         for(i = 0; i <= N; i++)
         {
-            printf("a[%f] = %f\n", i, a[i]);
+            printf("a[%d] = %f\n", i, a[i]);
             if(i%10 == 0)
                 getchar();
         }

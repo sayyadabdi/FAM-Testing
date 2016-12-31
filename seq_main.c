@@ -46,7 +46,7 @@ int main()
     print_timer();
     for(i = 0; i <= N - 1; i++)
     {
-    printf("a[%f] = %f\n", i, a[i]);
+    printf("a[%d] = %f\n", i, a[i]);
     }
     return 0;
 }
