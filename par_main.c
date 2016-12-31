@@ -31,15 +31,22 @@ int main()
     int* array;
     int myID, i, myStartingPosition, myEndPosition;
     char input;
-    printf("Press Y to start...\n**************************************************");
-    do
-    {
-        scanf("%c", &input);
-    }
-    while(input != 'Y' && input != 'y');
-    start_timer();
-    printf("Please wait...\n");
     myID = getID();
+    if(myID == MASTER)
+    {
+        printf("Press Y to start...\n");
+        do
+        {
+            scanf("%c", &input);
+        }
+        while(input != 'Y' && input != 'y');
+        printf("Please wait...\n");
+        start_timer();
+    }
+    else
+    {
+        printf("Waiting for boss' permission!\n");
+    }
     if ((fd = open("/mnt/fabric_emulation", O_RDWR)) == -1)
     {
         perror("open failed");
@@ -59,7 +66,6 @@ int main()
     }
     else
     {
-        printf("Waiting for boss' permission!\n");
         while(array[PROBLEM_SIZE] != -1 * WORLD_SIZE); // Wait for master's signal.
     }
 
@@ -81,14 +87,17 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
-        for(i=0; i<=PROBLEM_SIZE; i++)
-            printf("%d\n", array[i]);
     }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
-    stop_timer();
-    print_timer();
+    if(myID == MASTER)
+    {
+        stop_timer();
+        print_timer();
+        for(i = 0; i <= PROBLEM_SIZE; i++)
+            printf("%d\n", array[i]);
+    }
     return 0;
 }
 
