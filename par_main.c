@@ -7,7 +7,9 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-#define PROBLEM_SIZE 128
+#define N 128
+
+#define LEN N * N
 
 #define MASTER 1
 
@@ -28,7 +30,7 @@ int main()
     // File descriptor
     int fd;
     int* array;
-    int myID, i, myStartingPosition, myEndPosition;
+    int myID, i, j, k;
     char input;
     myID = getID();
     if(myID == MASTER)
@@ -52,7 +54,7 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for end_job_flag. Integers reserve 4 bytes.
-    if ((array = mmap(NULL, (PROBLEM_SIZE + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((array = mmap(NULL, (LEN + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -61,24 +63,30 @@ int main()
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        array[PROBLEM_SIZE] = -1 * WORLD_SIZE;
+        array[LEN] = -1 * WORLD_SIZE;
     }
     else
     {
-        while(array[PROBLEM_SIZE] != -1 * WORLD_SIZE); // Wait for master's signal.
+        while(array[LEN] != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
 
-    myStartingPosition = (myID - 1) * ((PROBLEM_SIZE) / WORLD_SIZE);
-    myEndPosition = myStartingPosition + ((PROBLEM_SIZE) / WORLD_SIZE) - 1;
-
-    for(i = myStartingPosition; i <= myEndPosition; i++)
+    j = 0, k = 0;
+    for(i = 0; i <= LEN - 1; i++)
     {
-        // storing the array in desc order: this is worst case scenario for sorting
-        array[i] = PROBLEM_SIZE - 1 - i;
+        if(i % N == 0)
+        {
+            j++;
+        }
+        if(k == N - 1)
+        {
+            k = 0;
+        }
+        array[i] = j * k;
+        k++;
     }
 
-    doSort(array, myStartingPosition, myEndPosition);
+    //doSort(array, myStartingPosition, myEndPosition);
 
     // It says: My job is finished!
     array[PROBLEM_SIZE]++;
@@ -88,14 +96,14 @@ int main()
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
-        mergeSortedParts(array, myEndPosition + 1);
-    }
-            for(i = 0; i <= PROBLEM_SIZE; i++)
+        //mergeSortedParts(array, myEndPosition + 1);
+        for(i = 0; i <= PROBLEM_SIZE; i++)
         {
             printf("%d\n", array[i]);
             if(i%10 == 0)
                 getchar();
         }
+    }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
