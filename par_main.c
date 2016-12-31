@@ -91,7 +91,7 @@ int main()
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
         mergeSortedParts(array, myEndPosition);
-                for(i = 65500; i <= PROBLEM_SIZE; i++)
+                for(i = 0; i <= PROBLEM_SIZE; i++)
                 {
             printf("%d\n", array[i]);
             if(i%5 == 0)
@@ -113,7 +113,7 @@ void mergeSortedParts(int array[], int myEndPosition)
 {
     int i, j;
 
-    for(i = 0; i <= myEndPosition; i++)
+    for(i = 0; i <= myEndPosition + 1; i++)
     {
         for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
         {
