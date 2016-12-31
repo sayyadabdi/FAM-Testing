@@ -51,7 +51,7 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for end_job_flag.
-    if ((a = mmap(NULL, (N + 1) * sizeof(double), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((a = mmap(NULL, (N + 1) * sizeof(int), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -60,11 +60,11 @@ int main()
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        *(a + N) = -1 * WORLD_SIZE;
+        a[N] = -1 * WORLD_SIZE;
     }
     else
     {
-        while(*(a + N) != -1 * WORLD_SIZE); // Wait for master's signal.
+        while(a[N] != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
     a[0] = 5.0f;
@@ -84,12 +84,12 @@ int main()
     }
 */
     // It says: My job is finished!
-    *(a + N) = *(a + N) + 1;
+    a[N] = a[N] + 1;
 
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(*(a + N) != 0); // wait for others
+        while(a[N] != 0); // wait for others
 
         for(i = 0; i <= N; i++)
         {
@@ -100,7 +100,7 @@ int main()
     }
 
     // Unmapping memory
-    munmap(a, (N + 1) * sizeof(double));
+    munmap(a, (N + 1) * sizeof(int));
     if(myID == MASTER)
     {
         stop_timer();
