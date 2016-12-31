@@ -77,7 +77,7 @@ int main()
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                a[i + myID - 1] += sqrt(sqrt(a[i + myID - 1]) + sqrt(j * k));
+                a[i + myID - 1] += a[i + myID - 1] + j * k;
             }
         }
     }
@@ -92,7 +92,7 @@ int main()
 
         for(i = 0; i <= N; i++)
         {
-            printf("%f\n", a[i]);
+            printf("a[%f] = %f\n", i, a[i]);
             if(i%10 == 0)
                 getchar();
         }
