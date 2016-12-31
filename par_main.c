@@ -88,11 +88,11 @@ int main()
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
-        mergeSortedParts(array, myEndPosition + 1);
+        //mergeSortedParts(array, myEndPosition + 1);
         for(i = 0; i <= PROBLEM_SIZE; i++)
         {
             printf("%d\n", array[i]);
-            if(i%5 == 0)
+            if(i%10 == 0)
                 getchar();
         }
     }
