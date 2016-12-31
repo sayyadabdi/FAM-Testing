@@ -92,7 +92,7 @@ int main()
                 {
             printf("%d\n", array[i]);
             if(i%5 == 0)
-                getchar();
+            getchar();
             }
     }
 
@@ -149,7 +149,7 @@ void doSort(int array[], int myStartingPosition, int myEndPosition)
 
     for(i = myStartingPosition; i <= myEndPosition; i++)
     {
-        for(j = i + 1; j <= myEndPosition; j++)
+        for(j = i + 1; j <= PROBLEM_SIZE - 1; j++)
         {
             if(array[i] > array[j])
             {
