@@ -8,7 +8,7 @@
 
 #define MASTER 1
 
-#defint GO_EVERYBODY 7
+#define GO_EVERYBODY 7
 
 #define WORLD_SIZE 2
 
