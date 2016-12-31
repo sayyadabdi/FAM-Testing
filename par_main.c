@@ -82,15 +82,17 @@ int main()
         }
     }
 
+    if(myID == MASTER)
+    {
+        printf("Waiting for my pals to finish their job!\n");
+        while(a[N] != -1); // wait for others
+    }
+
     // It says: My job is finished!
-    if(a[N] != -1 * WORLD_SIZE)
     a[N] = a[N] + 1;
 
     if(myID == MASTER)
     {
-        printf("Waiting for my pals to finish their job!\n");
-        while(a[N] != 0); // wait for others
-
         for(i = 0; i <= N; i++)
         {
             printf("a[%d] = %d\n", i, a[i]);
