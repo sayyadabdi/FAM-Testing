@@ -77,10 +77,7 @@ int main()
         if(i!= 0 && i % N == 0)
         {
             j++;
-            if(j == N - 1)
-            {
             k = 0;
-            }
         }
         array[i] = j * k;
         k++;
