@@ -12,6 +12,8 @@
 
 #define MASTER 1
 
+#defint EVERYBODY_GO -7
+
 #define WORLD_SIZE 2
 
 
@@ -50,8 +52,8 @@ int main()
         perror("open failed");
         exit(1);
     }
-    // PROBLEM_SIZE + 1: One for end_job_flag.
-    if ((a = mmap(NULL, (N + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    // PROBLEM_SIZE + 1: One for start_job_flag, the other for end_job_flag.
+    if ((a = mmap(NULL, (N + 2) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -60,11 +62,12 @@ int main()
     if(myID == MASTER)
     {
         // It is used to determine others working status
+        a[N + 1] = EVERYBODY_GO;
         a[N] = -1 * WORLD_SIZE;
     }
     else
     {
-        while(a[N] != -1 * WORLD_SIZE); // Wait for master's signal.
+        while(a[N + 1] != EVERYBODY_GO); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
 
@@ -82,17 +85,14 @@ int main()
         }
     }
 
-    if(myID == MASTER)
-    {
-        printf("Waiting for my pals to finish their job!\n");
-        while(a[N] != -1); // wait for others
-    }
-
     // It says: My job is finished!
     a[N] = a[N] + 1;
 
     if(myID == MASTER)
     {
+        printf("Waiting for my pals to finish their job!\n");
+        while(a[N] != 0); // wait for others
+
         for(i = 0; i <= N; i++)
         {
             printf("a[%d] = %d\n", i, a[i]);
