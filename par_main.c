@@ -71,6 +71,7 @@ int main()
 
     if(myID == MASTER)
     {
+        printf("Waiting for my pals to finish their job!\n")
         while(array[PROBLEM_SIZE] != WORLD_SIZE); // wait for others
     }
 
