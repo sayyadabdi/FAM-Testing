@@ -74,7 +74,7 @@ int main()
     j = 0, k = 0;
     for(i = 0; i <= LEN - 1; i++)
     {
-        if(i % N == 0)
+        if(i!= 0 && i % N == 0)
         {
             j++;
         }
