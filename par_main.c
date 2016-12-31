@@ -86,6 +86,7 @@ int main()
     array[PROBLEM_SIZE]++;
 
     if(myID == MASTER)
+    {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
@@ -96,7 +97,7 @@ int main()
             if(i%5 == 0)
             getchar();
             }
-    }
+            }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
