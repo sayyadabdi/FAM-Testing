@@ -35,7 +35,10 @@ int main()
     doSort(array, len);
     stop_timer();
     print_timer();*/
-    printf(getlogin());
+    char a[1024];
+    a[1023] = '\0';
+    gethostname(a, 1024);
+    printf("%s\n", a);
     return 0;
 }
 
