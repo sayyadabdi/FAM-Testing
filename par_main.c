@@ -88,6 +88,8 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
+                for(i = 0; i <= PROBLEM_SIZE; i++)
+            printf("%d\n", array[i]);
     }
 
     // Unmapping memory
@@ -96,8 +98,6 @@ int main()
     {
         stop_timer();
         print_timer();
-        for(i = 0; i <= PROBLEM_SIZE; i++)
-            printf("%d\n", array[i]);
     }
     return 0;
 }
