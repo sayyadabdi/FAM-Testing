@@ -73,17 +73,14 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != WORLD_SIZE); // wait for others
+            for(i=0;i<=PROBLEM_SIZE;i++)
+    printf("%d\n", array[i]);
     }
 
     // Unmapping memory
     munmap(array, (PROBLEM_SIZE + 1) * 4);
     stop_timer();
     print_timer();
-    if(myID == MASTER)
-    {
-    for(i=0;i<=PROBLEM_SIZE;i++)
-    printf("%d\n", array[i]);
-    }
     return 0;
 }
 
