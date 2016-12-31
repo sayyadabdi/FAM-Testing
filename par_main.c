@@ -81,7 +81,7 @@ int main()
     print_timer();
     if(myID == MASTER)
     {
-    for(int i=0;i<=PROBLEM_SIZE;i++)
+    for(i=0;i<=PROBLEM_SIZE;i++)
     printf("%d\n", array[i]);
     }
     return 0;
