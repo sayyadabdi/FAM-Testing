@@ -50,8 +50,8 @@ int main()
         perror("open failed");
         exit(1);
     }
-    // PROBLEM_SIZE + 1: One for end_job_flag. Doubles reserve 8 bytes.
-    if ((a = mmap(NULL, (N + 1) * 8, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    // PROBLEM_SIZE + 1: One for end_job_flag.
+    if ((a = mmap(NULL, (N + 1) * sizeof(double), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -77,7 +77,7 @@ int main()
             for(k = 0; k <= N - 1; k++)
             {
                 // Do something
-                *(a + i) = 5;
+                a[i] = 5;
             }
         }
     }
@@ -92,14 +92,14 @@ int main()
 
         for(i = 0; i <= N; i++)
         {
-            printf("a[%d] = %f\n", i, *(a + i));
+            printf("a[%d] = %f\n", i, a[i]);
             if(i%10 == 0)
                 getchar();
         }
     }
 
     // Unmapping memory
-    munmap(a, (N + 1) * 8);
+    munmap(a, (N + 1) * sizeof(double));
     if(myID == MASTER)
     {
         stop_timer();
