@@ -86,8 +86,6 @@ int main()
     array[PROBLEM_SIZE]++;
 
     if(myID == MASTER)
-    {
-        printf("\n%d\n", myID);
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
@@ -115,10 +113,8 @@ void mergeSortedParts(int array[], int myEndPosition)
     int i, j;
     for(i = 0; i <= myEndPosition; i++)
     {
-    for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition + 1)
+    for(j = i + myEndPosition; j <= PROBLEM_SIZE - 1; j+=myEndPosition + 1)
     {
-        printf("array[0] = %d , array[j] = %d", array[i],array[j]);
-        getchar();
             if(array[i] > array[j])
             {
                 // swapping values (note: no temp variable used)
