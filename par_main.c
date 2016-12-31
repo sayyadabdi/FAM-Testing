@@ -90,7 +90,7 @@ int main()
         printf("Waiting for my pals to finish their job!\n");
         while(array[PROBLEM_SIZE] != 0); // wait for others
         // Array is partialy sorted, so we have to merge them.
-        mergeSortedParts(array, myEndPosition - myStartingPosition + 1);
+        mergeSortedParts(array, myEndPosition);
                 for(i = 0; i <= PROBLEM_SIZE; i++)
                 {
             printf("%d\n", array[i]);
@@ -109,13 +109,12 @@ int main()
     return 0;
 }
 
-void mergeSortedParts(int array[], int gap)
+void mergeSortedParts(int array[], int myEndPosition)
 {
     int i, j;
-    printf("%d\n",gap);
-    for(i = 0; i <= gap - 1; i++)
+    for(i = 0; i <= myEndPosition; i++)
     {
-    for(j = i + gap; j <= i +  2 * gap - 1; j++)
+    for(j = i + myEndPosition + 1; j <= PROBLEM_SIZE - 1; j+=myEndPosition)
     {
             if(array[i] > array[j])
             {
