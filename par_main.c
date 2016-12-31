@@ -83,6 +83,7 @@ int main()
     }
 
     // It says: My job is finished!
+    if(a[N] != -1 * WORLD_SIZE;)
     a[N] = a[N] + 1;
 
     if(myID == MASTER)
