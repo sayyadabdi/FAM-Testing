@@ -51,7 +51,7 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for end_job_flag.
-    if ((a = mmap(NULL, (N + 1) * sizeof(int), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((a = mmap(NULL, (N + 1) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -67,7 +67,6 @@ int main()
         while(a[N] != -1 * WORLD_SIZE); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
-    a[0] = 5.0f;
 /*
     // This is very expensive (not that expensive though...)
     for(i = 0; i <= N - 1; i ++)
@@ -93,14 +92,14 @@ int main()
 
         for(i = 0; i <= N; i++)
         {
-            printf("a[%d] = %f\n", i, a[i]);
+            printf("a[%d] = %d\n", i, a[i]);
             if(i%10 == 0)
                 getchar();
         }
     }
 
     // Unmapping memory
-    munmap(a, (N + 1) * sizeof(int));
+    munmap(a, (N + 1) * 4);
     if(myID == MASTER)
     {
         stop_timer();
