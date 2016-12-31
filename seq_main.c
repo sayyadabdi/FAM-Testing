@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <math.h>
 
-#define N 2048
+#define N 4096
 
 struct timeval t1, t2;
 

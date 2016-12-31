@@ -8,7 +8,7 @@
 #include <sys/mman.h>
 #include <math.h>
 
-#define N 2048
+#define N 4096
 
 #define MASTER 1
 
