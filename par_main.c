@@ -8,7 +8,7 @@
 #include <sys/mman.h>
 #include <math.h>
 
-#define N 32
+#define N 2048
 
 #define MASTER 1
 
@@ -95,13 +95,6 @@ int main()
     {
         printf("Waiting for my pals to finish their job!\n");
         while(a[N] != 0); // wait for others
-
-        for(i = 0; i <= N; i++)
-        {
-            printf("a[%d] = %d\n", i, a[i]);
-            if(i%10 == 0)
-                getchar();
-        }
     }
 
     // Unmapping memory
@@ -147,5 +140,5 @@ void print_timer()
 {
     int elapsedTime;
     elapsedTime = (t2.tv_sec - t1.tv_sec);
-    printf("Elapsed time: %d seconds.\n", elapsedTime);
+    printf("For problems size=%d, Elapsed time is: %d seconds.\n",N , elapsedTime);
 }

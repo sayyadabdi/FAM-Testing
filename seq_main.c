@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <math.h>
 
-#define N 32
+#define N 2048
 
 struct timeval t1, t2;
 
@@ -44,10 +44,6 @@ int main()
     }
     stop_timer();
     print_timer();
-    for(i = 0; i <= N - 1; i++)
-    {
-    printf("a[%d] = %d\n", i, a[i]);
-    }
     return 0;
 }
 
@@ -65,5 +61,5 @@ void print_timer()
 {
     int elapsedTime;
     elapsedTime = (t2.tv_sec - t1.tv_sec);
-    printf("Elapsed time: %d seconds.\n", elapsedTime);
+    printf("For problems size=%d, Elapsed time is: %d seconds.\n",N , elapsedTime);
 }
