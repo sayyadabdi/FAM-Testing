@@ -7,11 +7,9 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-#define PROBLEM_SIZE 65536
+#define PROBLEM_SIZE 128
 
 #define MASTER 1
-
-#define GO_EVERYBODY 7
 
 #define WORLD_SIZE 2
 
