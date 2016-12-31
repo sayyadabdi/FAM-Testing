@@ -31,7 +31,7 @@ int main()
     int* array;
     int myID, i, myStartingPosition, myEndPosition;
     char input;
-    printf("Press Y to start...\n");
+    printf("Press Y to start...\n**************************************************");
     do
     {
         scanf("%c", &input);
@@ -80,7 +80,7 @@ int main()
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(array[PROBLEM_SIZE] != WORLD_SIZE); // wait for others
+        while(array[PROBLEM_SIZE] != 0); // wait for others
         for(i=0; i<=PROBLEM_SIZE; i++)
             printf("%d\n", array[i]);
     }
