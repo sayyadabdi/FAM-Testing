@@ -46,14 +46,14 @@ int myID;
 int main()
 {
     // File descriptor
-    int fd;
-    int* a;
-    int i, j, k;
-    char input;
-    printf("my id is");
+    //int fd;
+    //int* a;
+    //int i, j, k;
+    //char input;
+    //printf("my id is");
     myID = getID();
     printf("%d my id is", myID);
-    if(myID == MASTER)
+    /*if(myID == MASTER)
     {
         printf("Press Y to start...\n");
         do
@@ -117,7 +117,7 @@ int main()
     {
         stop_timer();
         print_timer();
-    }
+    }*/
     return 0;
 }
 
