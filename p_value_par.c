@@ -77,12 +77,14 @@ int main()
         exit(1);
     }
 
+    // Remember: this memory is persistent! So always clear these...
+    a[2] = 0;
+    a[1] = 0;
+    a[0] = 0;
+
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        a[2] = 0;
-        a[1] = 0;
-        a[0] = 0;
         a[2] = EVERYBODY_GO;
         a[1] = -1 * WORLD_SIZE;
     }
@@ -99,6 +101,7 @@ int main()
     evaluate_M(N / 2);
 
     printf("\nM = %d\n", M);
+    print_points();
 
     a[0] += M;
 
