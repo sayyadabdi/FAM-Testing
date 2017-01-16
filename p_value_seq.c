@@ -4,7 +4,7 @@
 #include <time.h>
 #include <math.h>
 
-#define N 100000000
+#define N 10000000
 
 struct point
 {
