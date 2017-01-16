@@ -97,6 +97,7 @@ int main()
 
     srand(time(NULL));
     init_points(N / 2);
+    print_points();
     M = evaluate_M(N / 2);
 
     a[0] += M;
