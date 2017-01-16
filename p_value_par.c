@@ -45,6 +45,7 @@ int main()
     // File descriptor
     int fd;
     int* a;
+    long temp;
     int i, j, k, u;
     char input;
     myID = getID();
@@ -81,6 +82,7 @@ int main()
     a[2] = 0;
     a[1] = 0;
     a[0] = 0;
+    temp = 0;
 
     if(myID == MASTER)
     {
@@ -100,10 +102,12 @@ int main()
         // This is very expensive (not that expensive though...)
         init_points(N / 2);
         evaluate_M(N / 2);
-        a[0] += M;
+        temp += M;
         M = 0;
         u++;
     }
+
+    a[0] += temp;
 
     // It says: My job is finished!
     a[1] = a[1] + 1;
