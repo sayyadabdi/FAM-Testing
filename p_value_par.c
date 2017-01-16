@@ -101,6 +101,7 @@ int main()
         init_points(N / 2);
         evaluate_M(N / 2);
         a[0] += M;
+        printf("\nM = %d\n", M);
         M = 0;
         u++;
     }
