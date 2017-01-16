@@ -53,6 +53,7 @@ int main()
     int* a;
     int i, j, k;
     char input;
+    printf("my id is");
     myID = getID();
     printf("%d my id is", myID);
     if(myID == MASTER)
