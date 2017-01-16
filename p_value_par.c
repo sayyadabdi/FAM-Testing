@@ -94,7 +94,7 @@ int main()
         printf("Got the signal, pleas wait...\n");
     }
 
-    srand((unsigned) time(NULL) * getpid());
+    srand((unsigned) time(NULL) * getpid() * myID);
     while(u <= 10)
     {
         // This is very expensive (not that expensive though...)
