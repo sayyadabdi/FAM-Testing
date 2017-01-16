@@ -37,10 +37,10 @@ int main()
         srand(time(NULL));
         init_points();
         evaluate_M();
-        print_p_value();
         // End Job
         i++;
     }
+    print_p_value();
     stop_timer();
     print_timer();
     return EXIT_SUCCESS;
@@ -102,5 +102,5 @@ void evaluate_M()
 
 void print_p_value()
 {
-    printf("Estimated P value := %1.3f.\n", 4.0 * M / N);
+    printf("Estimated P value := %1.3f.\n", 4.0 * M / (N * 10));
 }
