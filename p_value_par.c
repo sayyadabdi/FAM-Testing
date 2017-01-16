@@ -38,7 +38,7 @@ void print_timer();
 void init_points(int);
 float get_random();
 void print_points();
-int evaluate_M(int);
+void evaluate_M(int);
 void print_p_value();
 
 int main()
@@ -49,6 +49,7 @@ int main()
     int i, j, k;
     char input;
     myID = getID();
+    M = 0;
     if(myID == MASTER)
     {
         printf("Press Y to start...\n");
@@ -97,7 +98,7 @@ int main()
 
     srand(time(NULL));
     init_points(N / 2);
-    M = evaluate_M(N / 2);
+    evaluate_M(N / 2);
 
     printf("\nM = %d\n", M);
 
@@ -174,7 +175,7 @@ void print_points()
     }
 }
 
-int evaluate_M(int n)
+void evaluate_M(int n)
 {
     int i, j;
     for(i=0; i<=n-1; i+=WORLD_SIZE)
