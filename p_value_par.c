@@ -52,7 +52,7 @@ int main()
     //char input;
     //printf("my id is");
     myID = getID();
-    printf("%d my id is", myID);
+    printf("\n%d my id is\n", myID);
     /*if(myID == MASTER)
     {
         printf("Press Y to start...\n");
