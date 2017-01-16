@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
+#include <math.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/mman.h>
-#include <math.h>
-
-#define N 4096
 
 #define MASTER 1
 
@@ -16,6 +15,7 @@
 
 #define WORLD_SIZE 2
 
+#define N 100000000
 
 struct timeval t1, t2;
 
@@ -24,12 +24,34 @@ void stop_timer();
 void print_timer();
 int getID();
 
+struct point
+{
+    float x;
+    float y;
+};
+
+struct timeval t1, t2;
+struct point points[N];
+
+int M;
+
+void start_timer();
+void stop_timer();
+void print_timer();
+void init_points();
+float get_random();
+void print_points();
+void evaluate_M();
+void print_p_value();
+
+int myID;
+
 int main()
 {
     // File descriptor
     int fd;
     int* a;
-    int myID, i, j, k;
+    int i, j, k;
     char input;
     myID = getID();
     if(myID == MASTER)
@@ -75,18 +97,11 @@ int main()
     }
 
     // This is very expensive (not that expensive though...)
-    for(i = 0; i <= N - 1; i += WORLD_SIZE)
-    {
-        a[i + myID - 1] = 0;
-        for(j = 0; j <= N - 1; j++)
-        {
-            for(k = 0; k <= N - 1; k++)
-            {
-                // Do something
-                a[i + myID - 1] = j * k;
-            }
-        }
-    }
+
+    srand(time(NULL));
+    init_points();
+    evaluate_M();
+    print_p_value();
 
     // It says: My job is finished!
     a[N] = a[N] + 1;
@@ -107,6 +122,77 @@ int main()
     return 0;
 }
 
+void start_timer()
+{
+    gettimeofday(&t1, NULL);
+}
+
+void stop_timer()
+{
+    gettimeofday(&t2, NULL);
+}
+
+void print_timer()
+{
+    float elapsedTime;
+    // sec to ms
+    elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;
+    // us to ms
+    elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;
+    printf("Elapsed time := %f ms.\n", elapsedTime);
+}
+
+void init_points()
+{
+    int i, j;
+    for(i=0; i<=N-1; i+=WORLD_SIZE)
+    {
+        for(j=i; j< i + WORLD_SIZE; j++)
+        {
+            if(j - i + 1 == myID)
+            {
+                points[j].x = get_random();
+                points[j].y = get_random();
+            }
+        }
+    }
+}
+
+float get_random()
+{
+    return -1.0 + ((float)rand() / (float)RAND_MAX * 2.0);
+}
+
+void print_points()
+{
+    int i;
+    for(i=0; i<=N-1; i++)
+    {
+        printf("Point[%i]: x = %f, y = %f\n", i, points[i].x, points[i].y);
+    }
+}
+
+void evaluate_M()
+{
+    int i, j;
+    for(i=0; i<=N-1; i+=WORLD_SIZE)
+    {
+        for(j=i; j< i + WORLD_SIZE; j++)
+        {
+            if(j - i + 1 == myID)
+            {
+                if(points[j].x * points[j].x + points[j].y * points[j].y < 1)
+                    M++;
+            }
+        }
+    }
+}
+
+void print_p_value()
+{
+    printf("Estimated P value := %1.3f.\n", 4.0 * M / N);
+}
+
 int getID()
 {
     char a[8];
@@ -124,21 +210,4 @@ int getID()
         ids[1] = '\0';
     }
     return atoi(ids);
-}
-
-void start_timer()
-{
-    gettimeofday(&t1, NULL);
-}
-
-void stop_timer()
-{
-    gettimeofday(&t2, NULL);
-}
-
-void print_timer()
-{
-    int elapsedTime;
-    elapsedTime = (t2.tv_sec - t1.tv_sec);
-    printf("For problems size=%d, Elapsed time is: %d seconds.\n",N , elapsedTime);
 }
