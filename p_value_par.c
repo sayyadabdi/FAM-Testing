@@ -27,7 +27,7 @@ struct point
 
 struct point points[N / 2];
 
-long M;
+int M;
 int myID;
 
 int getID();
@@ -44,7 +44,7 @@ int main()
 {
     // File descriptor
     int fd;
-    long* a;
+    int* a;
     int i, j, k, u;
     char input;
     myID = getID();
@@ -71,7 +71,7 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for start_job_flag, the other for end_job_flag.
-    if ((a = mmap(NULL, 3 * sizeof(long), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((a = mmap(NULL, 3 * sizeof(int), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
@@ -101,7 +101,6 @@ int main()
         init_points(N / 2);
         evaluate_M(N / 2);
         a[0] += M;
-        printf("\nM = %d\n", M);
         M = 0;
         u++;
     }
@@ -115,7 +114,7 @@ int main()
         M = a[0];
     }
     // Unmapping memory
-    munmap(a, 3 * sizeof(long));
+    munmap(a, 3 * sizeof(int));
     if(myID == MASTER)
     {
         print_p_value();
