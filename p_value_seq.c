@@ -16,6 +16,7 @@ struct timeval t1, t2;
 struct point points[N];
 
 int M;
+int i;
 
 void start_timer();
 void stop_timer();
@@ -29,12 +30,17 @@ void print_p_value();
 int main()
 {
     start_timer();
-    // Start Job
-    srand(time(NULL));
-    init_points();
-    evaluate_M();
-    print_p_value();
-    // End Job
+    i = 1;
+    while(i <= 10)
+    {
+        // Start Job
+        srand(time(NULL));
+        init_points();
+        evaluate_M();
+        print_p_value();
+        // End Job
+        i++;
+    }
     stop_timer();
     print_timer();
     return EXIT_SUCCESS;
