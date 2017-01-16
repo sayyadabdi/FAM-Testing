@@ -15,7 +15,7 @@
 
 #define WORLD_SIZE 2
 
-#define N 100
+#define N 10000000
 
 struct timeval t1, t2;
 
@@ -197,7 +197,6 @@ int getID()
 {
     char a[8];
     char ids[3];
-    printf("dDDDDDDDDDDDDDDDDDDDDDDDddddddddddddddddddddddD");
     gethostname(a, 8);
     strcat(a, "$");
     ids[0] = a[6];
