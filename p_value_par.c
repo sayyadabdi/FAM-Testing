@@ -94,10 +94,10 @@ int main()
         printf("Got the signal, pleas wait...\n");
     }
 
+    srand((unsigned) time(NULL) * getpid());
     while(u <= 10)
     {
         // This is very expensive (not that expensive though...)
-        srand((unsigned) time(NULL) * getpid());
         init_points(N / 2);
         evaluate_M(N / 2);
         a[0] += M;
@@ -180,7 +180,7 @@ void evaluate_M()
 
 void print_p_value()
 {
-    printf("Estimated P value := %1.3f.\n", 4.0 * M / N);
+    printf("Estimated P value := %1.3f.\n", 4.0 * M / (N * 10));
 }
 
 int getID()
