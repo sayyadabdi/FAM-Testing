@@ -15,11 +15,9 @@
 
 #define WORLD_SIZE 2
 
-#define N 1000
+#define N 100
 
 struct timeval t1, t2;
-
-int getID();
 
 struct point
 {
@@ -27,33 +25,31 @@ struct point
     float y;
 };
 
-struct timeval t1, t2;
-struct point points[N];
+struct point points[N / 2];
 
 int M;
+int myID;
 
+
+int getID();
 void start_timer();
 void stop_timer();
 void print_timer();
-void init_points();
+void init_points(int);
 float get_random();
 void print_points();
-void evaluate_M();
+int evaluate_M(int);
 void print_p_value();
-
-int myID;
 
 int main()
 {
     // File descriptor
-    //int fd;
-    //int* a;
-    //int i, j, k;
-    //char input;
-    //printf("my id is");
+    int fd;
+    int* a;
+    int i, j, k;
+    char input;
     myID = getID();
-    printf("\n%d my id is\n", myID);
-    /*if(myID == MASTER)
+    if(myID == MASTER)
     {
         printf("Press Y to start...\n");
         do
@@ -74,24 +70,26 @@ int main()
         exit(1);
     }
     // PROBLEM_SIZE + 1: One for start_job_flag, the other for end_job_flag.
-    if ((a = mmap(NULL, (N + 2) * 4, PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
+    if ((a = mmap(NULL, 3 * sizeof(int), PROT_WRITE, MAP_SHARED, fd, 0)) == MAP_FAILED)
     {
         perror("mmap failed");
         exit(1);
     }
 
-    // Remember: this memory is persistent! So always clear this flag...
-    a[N + 1] = 0;
+    // Remember: this memory is persistent! So always clear these...
+    a[2] = 0;
+    a[1] = 0;
+    a[0] = 0;
 
     if(myID == MASTER)
     {
         // It is used to determine others working status
-        a[N + 1] = EVERYBODY_GO;
-        a[N] = -1 * WORLD_SIZE;
+        a[2] = EVERYBODY_GO;
+        a[1] = -1 * WORLD_SIZE;
     }
     else
     {
-        while(a[N + 1] != EVERYBODY_GO); // Wait for master's signal.
+        while(a[2] != EVERYBODY_GO); // Wait for master's signal.
         printf("Got the signal, pleas wait...\n");
     }
 
@@ -99,25 +97,28 @@ int main()
 
     srand(time(NULL));
     init_points();
-    evaluate_M();
-    print_p_value();
+    M = evaluate_M();
+
+    a[0] += M;
 
     // It says: My job is finished!
-    a[N] = a[N] + 1;
+    a[1] = a[1] + 1;
 
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
-        while(a[N] != 0); // wait for others
+        while(a[1] != 0); // wait for others
+        M = a[0];
     }
 
     // Unmapping memory
-    munmap(a, (N + 2) * 4);
+    munmap(a, 3 * 4);
     if(myID == MASTER)
     {
+        print_p_value();
         stop_timer();
         print_timer();
-    }*/
+    }
     return 0;
 }
 
@@ -141,10 +142,10 @@ void print_timer()
     printf("Elapsed time := %f ms.\n", elapsedTime);
 }
 
-void init_points()
+void init_points(int n)
 {
     int i, j;
-    for(i=0; i<=N-1; i+=WORLD_SIZE)
+    for(i=0; i<=n-1; i+=WORLD_SIZE)
     {
         for(j=i; j< i + WORLD_SIZE; j++)
         {
@@ -171,10 +172,10 @@ void print_points()
     }
 }
 
-void evaluate_M()
+int evaluate_M(int n)
 {
     int i, j;
-    for(i=0; i<=N-1; i+=WORLD_SIZE)
+    for(i=0; i<=n-1; i+=WORLD_SIZE)
     {
         for(j=i; j< i + WORLD_SIZE; j++)
         {
