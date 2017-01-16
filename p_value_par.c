@@ -96,7 +96,7 @@ int main()
 
     // This is very expensive (not that expensive though...)
 
-    srand(time(NULL));
+    srand((unsigned) time(NULL) * getpid());
     init_points(N / 2);
     evaluate_M(N / 2);
 
