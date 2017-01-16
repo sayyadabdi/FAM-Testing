@@ -97,8 +97,9 @@ int main()
 
     srand(time(NULL));
     init_points(N / 2);
-    print_points();
     M = evaluate_M(N / 2);
+
+    printf("\nM = %d\n", M);
 
     a[0] += M;
 
