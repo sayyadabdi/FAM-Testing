@@ -30,7 +30,6 @@ struct point points[N / 2];
 int M;
 int myID;
 
-
 int getID();
 void start_timer();
 void stop_timer();
@@ -46,10 +45,9 @@ int main()
     // File descriptor
     int fd;
     int* a;
-    int i, j, k;
+    int i, j, k, u;
     char input;
     myID = getID();
-    M = 0;
     if(myID == MASTER)
     {
         printf("Press Y to start...\n");
@@ -60,6 +58,8 @@ int main()
         while(input != 'Y' && input != 'y');
         printf("Please wait...\n");
         start_timer();
+        M = 0;
+        u = 1;
     }
     else
     {
@@ -94,26 +94,25 @@ int main()
         printf("Got the signal, pleas wait...\n");
     }
 
-    // This is very expensive (not that expensive though...)
-
-    srand((unsigned) time(NULL) * getpid());
-    init_points(N / 2);
-    evaluate_M(N / 2);
-
-    printf("\nM = %d\n", M);
-
-    a[0] += M;
+    while(u <= 10)
+    {
+        // This is very expensive (not that expensive though...)
+        srand((unsigned) time(NULL) * getpid());
+        init_points(N / 2);
+        evaluate_M(N / 2);
+        a[0] += M;
+        M = 0;
+        u++;
+    }
 
     // It says: My job is finished!
     a[1] = a[1] + 1;
-
     if(myID == MASTER)
     {
         printf("Waiting for my pals to finish their job!\n");
         while(a[1] != 0); // wait for others
         M = a[0];
     }
-
     // Unmapping memory
     munmap(a, 3 * sizeof(int));
     if(myID == MASTER)
