@@ -35,10 +35,10 @@ int getID();
 void start_timer();
 void stop_timer();
 void print_timer();
-void init_points(int);
+void init_points();
 float get_random();
 void print_points();
-void evaluate_M(int);
+void evaluate_M();
 void print_p_value();
 
 int main()
@@ -145,19 +145,13 @@ void print_timer()
     printf("Elapsed time := %f ms.\n", elapsedTime);
 }
 
-void init_points(int n)
+void init_points()
 {
-    int i, j;
-    for(i=0; i<=n-1; i+=WORLD_SIZE)
+    int i;
+    for(i=0; i<= N / 2 - 1; i+=WORLD_SIZE)
     {
-        for(j=i; j< i + WORLD_SIZE; j++)
-        {
-            if(j - i + 1 == myID)
-            {
-                points[j].x = get_random();
-                points[j].y = get_random();
-            }
-        }
+        points[i].x = get_random();
+        points[i].y = get_random();
     }
 }
 
@@ -169,25 +163,19 @@ float get_random()
 void print_points()
 {
     int i;
-    for(i=0; i<=N-1; i++)
+    for(i=0; i<= N / 2 - 1; i++)
     {
         printf("Point[%i]: x = %f, y = %f\n", i, points[i].x, points[i].y);
     }
 }
 
-void evaluate_M(int n)
+void evaluate_M()
 {
-    int i, j;
-    for(i=0; i<=n-1; i+=WORLD_SIZE)
+    int i;
+    for(i=0; i<= N / 2 - 1; i++)
     {
-        for(j=i; j< i + WORLD_SIZE; j++)
-        {
-            if(j - i + 1 == myID)
-            {
-                if(points[j].x * points[j].x + points[j].y * points[j].y < 1)
-                    M++;
-            }
-        }
+        if(points[i].x * points[i].x + points[i].y * points[i].y < 1)
+            M++;
     }
 }
 
