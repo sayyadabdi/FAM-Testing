@@ -19,9 +19,6 @@
 
 struct timeval t1, t2;
 
-void start_timer();
-void stop_timer();
-void print_timer();
 int getID();
 
 struct point
@@ -199,6 +196,7 @@ int getID()
 {
     char a[8];
     char ids[3];
+    printf("dDDDDDDDDDDDDDDDDDDDDDDDddddddddddddddddddddddD");
     gethostname(a, 8);
     strcat(a, "$");
     ids[0] = a[6];
