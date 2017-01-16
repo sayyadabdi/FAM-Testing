@@ -54,6 +54,7 @@ int main()
     int i, j, k;
     char input;
     myID = getID();
+    printf("%d my id is", myID);
     if(myID == MASTER)
     {
         printf("Press Y to start...\n");
