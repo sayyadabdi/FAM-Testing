@@ -116,7 +116,7 @@ int main()
     }
 
     // Unmapping memory
-    munmap(a, 3 * 4);
+    munmap(a, 3 * sizeof(int));
     if(myID == MASTER)
     {
         print_p_value();
@@ -149,7 +149,7 @@ void print_timer()
 void init_points()
 {
     int i;
-    for(i=0; i<= N / 2 - 1; i+=WORLD_SIZE)
+    for(i=0; i<= N / 2 - 1; i++)
     {
         points[i].x = get_random();
         points[i].y = get_random();
