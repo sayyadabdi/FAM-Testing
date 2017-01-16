@@ -101,7 +101,6 @@ int main()
     evaluate_M(N / 2);
 
     printf("\nM = %d\n", M);
-    print_points();
 
     a[0] += M;
 
