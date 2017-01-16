@@ -96,8 +96,8 @@ int main()
     // This is very expensive (not that expensive though...)
 
     srand(time(NULL));
-    init_points();
-    M = evaluate_M();
+    init_points(N / 2);
+    M = evaluate_M(N / 2);
 
     a[0] += M;
 
