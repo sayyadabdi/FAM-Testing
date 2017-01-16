@@ -15,7 +15,7 @@
 
 #define WORLD_SIZE 2
 
-#define N 100000000
+#define N 10000000
 
 struct timeval t1, t2;
 
